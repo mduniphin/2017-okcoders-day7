@@ -43,7 +43,7 @@ exports.read = function(req, res, next){
 		res.send(404, "Username or password missing");
 		return next();
 	}
-	Auth.findOne(username: user, is_active: true).exec(function(err,data){ //we findone and pass data
+	Auth.findOne({username: user, is_active: true}).exec(function(err,data){ //we findone and pass data
 		if(!data){ 
 			res.send(400, {status: "failed", reason: "Invalid user account"});
 			return next();
@@ -56,6 +56,6 @@ exports.read = function(req, res, next){
 			}
 			res.send(200, {status:"success"});
 			return next();
-		}) 
-	})
+		}); 
+	});
 }
