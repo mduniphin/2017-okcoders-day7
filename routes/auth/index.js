@@ -2,8 +2,9 @@ var Auth = require('../../models/auth') //getting model
 //creating model
 exports.create = function(req, res, next){
 	var auth = new Auth();
-	auth.username = req.params.username;
-	auth.password = req.params.password;
+	auth.username = req.body.username;
+	auth.password = req.body.password;
+
 	auth.date = new Date();
 	auth.is_active = true;
 

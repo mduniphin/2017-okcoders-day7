@@ -1,6 +1,6 @@
 var restify = require('restify');
 var server = restify.createServer();
-server.use(restify.queryParser());
+server.use(restify.bodyParser());
 const port = 8088;
 
 var auth = require('./routes/auth');
@@ -17,7 +17,7 @@ db.once('open', function() {
 	console.log("Mongoose connection established.");
 });
 
-server.post('/user/add/:username/:password', auth.create);
+server.post('/user/add', auth.create);
 server.get('/', restify.serveStatic({ //serves up static webpage, restify method
 	directory: './client',
 	default: "index.html"
