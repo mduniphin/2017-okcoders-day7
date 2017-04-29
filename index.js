@@ -1,6 +1,9 @@
 var restify = require('restify');
 var server = restify.createServer();
-var port = 8088;
+server.use(restify.queryParser());
+const port = 8088;
+
+var auth = require('./routes/auth');
 
 var mongoose = require('mongoose');
 mongoose.connect('mongodb://localhost/testing3');
@@ -13,8 +16,9 @@ db.on('error', function(msg) {
 db.once('open', function() {
 	console.log("Mongoose connection established.");
 });
-//serves up static webpage, restify method
-server.get('/', restify.serveStatic({
+
+server.post('/user/add/:username/:password', auth.create);
+server.get('/', restify.serveStatic({ //serves up static webpage, restify method
 	directory: './client',
 	default: "index.html"
 }));
