@@ -1,6 +1,6 @@
 var Auth = require('../../models/auth') //getting model
 var bcrypt = require('bcrypt');
-const saltRounds = 2;
+const saltRounds = 2; //rounds of Bcrypt
 
 exports.create = function(req, res, next){ //creating model
 	var auth = new Auth();
@@ -33,4 +33,29 @@ exports.create = function(req, res, next){ //creating model
 			return next();
 		}			
 	});
+}
+
+exports.read = function(req, res, next){
+	var user = req.body.username; //does not send URL info, must use POST command
+	var pass = req.body.password;
+
+	if(!user || !pass){ //check for username and password
+		res.send(404, "Username or password missing");
+		return next();
+	}
+	Auth.findOne(username: user, is_active: true).exec(function(err,data){ //we findone and pass data
+		if(!data){ 
+			res.send(400, {status: "failed", reason: "Invalid user account"});
+			return next();
+		}	
+
+		bcrypt.compare(pass, data.password, function(err, status){//lookup salt value and number of rounds
+			if (status === false) {
+				res.send(400, {status: "failed", reason: "Invalid Password"});
+				return next();
+			}
+			res.send(200, {status:"success"});
+			return next();
+		}) 
+	})
 }

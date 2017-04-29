@@ -17,7 +17,7 @@ db.once('open', function() {
 	console.log("Mongoose connection established.");
 });
 
-server.post('/user/add', auth.create);
+server.post('/user/add', auth.create); //posting user and password
 server.get('/', restify.serveStatic({ //serves up static webpage, restify method
 	directory: './client',
 	default: "index.html"
