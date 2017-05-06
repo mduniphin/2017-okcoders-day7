@@ -1,15 +1,17 @@
 var restify = require('restify');
 var server = restify.createServer();
 server.use(restify.bodyParser());
-const port = 8088;
+var config = require('./config.js')();
+
+const port = config.port //from config
+var mongoose = require('mongoose');
 
 var auth = require('./routes/auth');
 
-var mongoose = require('mongoose');
-mongoose.connect('mongodb://localhost/testing3');
+mongoose.connect(config.mongodb);
 var db = mongoose.connection;
-//Hook for err
-db.on('error', function(msg) {
+
+db.on('error', function(msg) { //Hook for err
 	console.log('Mongoose bit the dust;' + msg);
 });
 
