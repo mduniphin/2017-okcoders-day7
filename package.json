@@ -1,7 +1,7 @@
 {
-  "name": "2017-ok-coders-week-6",
+  "name": "2017-ok-coders-week-7",
   "version": "0.0.1",
-  "description": "Week 6",
+  "description": "Week 7",
   "main": "index.js",
   "scripts": {
     "start": "node index.js",

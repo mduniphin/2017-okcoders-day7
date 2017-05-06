@@ -21,9 +21,15 @@ db.once('open', function() {
 
 server.post('/user/add', auth.create); //add user and password
 server.post('/user/login', auth.read); //login users
+
 server.get('/', restify.serveStatic({ //serves up static webpage, restify method
 	directory: './client',
 	default: "index.html"
+}));
+
+server.get(/\/private\//, restify.serveStatic({
+	directory: './client',
+	file: 'private.html'
 }));
 
 server.listen(port, function() {
